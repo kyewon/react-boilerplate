@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTodoActions } from 'app/actions';
 import { RootState } from 'app/reducers';
 import { TodoModel } from 'app/models';
-import { Header, TodoList, Footer } from 'app/components';
+import { Header, TodoList, Footer, Temper, Board } from 'app/components';
 
 const FILTER_VALUES = (Object.keys(TodoModel.Filter) as (keyof typeof TodoModel.Filter)[]).map(
   (key) => TodoModel.Filter[key]
@@ -47,6 +47,22 @@ export const App = ({ history, location }: App.Props) => {
   const activeCount = React.useMemo(() => todos.filter((todo) => !todo.completed).length, [todos]);
   const completedCount = React.useMemo(() => todos.filter((todo) => todo.completed).length, [todos]);
 
+  const tableData = [
+    {id: 1, name: 'rx', completed: false},
+    {id: 2, name: 'xx', completed: false},
+    {id: 3, name: 'ww', completed: false}
+  ]
+  const columns = [{
+    dataField: 'id',
+    text: 'ID'
+  }, {
+    dataField: 'name',
+    text: 'Name'
+  }, {
+    dataField: 'completed',
+    text: 'completed'
+  }]
+
   return (
     <div className={style.normal}>
       <Header addTodo={todoActions.addTodo} />
@@ -58,6 +74,10 @@ export const App = ({ history, location }: App.Props) => {
         onClickClearCompleted={handleClearCompleted}
         onClickFilter={handleFilterChange}
       />
+      <Temper color="red" name="계원1" />
+      <Temper color="blue" name="계원2" />
+      <div>------------------------ </div>
+      <Board tableData={tableData} columns = {columns} />
     </div>
   );
 };
