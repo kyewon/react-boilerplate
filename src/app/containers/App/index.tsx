@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTodoActions } from 'app/actions';
 import { RootState } from 'app/reducers';
 import { TodoModel } from 'app/models';
-import { Header, TodoList, Footer, Temper, Board } from 'app/components';
+import { Header, TodoList, Footer, Temper, Board, MUTable, MUDataGrid } from 'app/components';
 
 const FILTER_VALUES = (Object.keys(TodoModel.Filter) as (keyof typeof TodoModel.Filter)[]).map(
   (key) => TodoModel.Filter[key]
@@ -63,6 +63,24 @@ export const App = ({ history, location }: App.Props) => {
     text: 'completed'
   }]
 
+  const muHeaders = ['id', 'name', 'completed']
+  const muColumns = [
+    {id: 1, name: 'rx', completed: false},
+    {id: 2, name: 'xx', completed: false},
+    {id: 3, name: 'ww', completed: false}
+  ]
+
+  const muGridrows = [
+    {id: 1, name: 'hhhhh', age: 22},
+    {id: 2, name: 'fffffff', age: 23},
+    {id: 3, name: 'eeeeee', age: 24},
+  ]
+  const muGridcolumns = [
+    { field: 'id', headerName: 'ID', width: 100 },
+    { field: 'name', headerName: 'Name', width: 100 },
+    { field: 'age', headerName: 'Age', width: 200 }
+  ]
+
   return (
     <div className={style.normal}>
       <Header addTodo={todoActions.addTodo} />
@@ -77,7 +95,13 @@ export const App = ({ history, location }: App.Props) => {
       <Temper color="red" name="계원1" />
       <Temper color="blue" name="계원2" />
       <div>------------------------ </div>
-      <Board tableData={tableData} columns = {columns} />
+      <Board tableData={tableData} columns= {columns} />
+
+      <div>------------------------ </div>
+      <MUTable headers={muHeaders} columns= {muColumns} />
+
+      <div>------------------------ </div>
+      <MUDataGrid columns= {muGridcolumns} rows= {muGridrows} />
     </div>
   );
 };

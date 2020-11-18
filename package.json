@@ -53,6 +53,8 @@
     "webpack-dev-server": "^3.10.1"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/data-grid": "^4.0.0-alpha.9",
     "classnames": "^2.2.6",
     "react": "^16.12.0",
     "react-bootstrap-table-next": "^4.0.3",

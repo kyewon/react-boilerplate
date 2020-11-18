@@ -5,3 +5,5 @@ export { TodoItem } from './TodoItem';
 export { TodoTextInput } from './TodoTextInput';
 export { Temper } from './Temper';
 export { Board } from './Board';
+export { MUTable } from './MaterialUI/MUTable';
+export { MUDataGrid } from './MaterialUI/MUDataGrid';
