@@ -1,2 +1,2 @@
 export * from './TodoModel';
-export * from './BoardModel';
+export * from './MUModel';

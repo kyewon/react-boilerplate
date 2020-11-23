@@ -2,10 +2,10 @@ import React from 'react';
 import style from './style.css';
 import { RouteComponentProps } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { useTodoActions } from 'app/actions';
+import { useTodoActions, useMUActions } from 'app/actions';
 import { RootState } from 'app/reducers';
 import { TodoModel } from 'app/models';
-import { Header, TodoList, Footer, Temper, Board, MUTable, MUDataGrid } from 'app/components';
+import { Header, TodoList, Footer, Temper, Board, MUTable, MUDataGrid, MUModelDataGrid } from 'app/components';
 
 const FILTER_VALUES = (Object.keys(TodoModel.Filter) as (keyof typeof TodoModel.Filter)[]).map(
   (key) => TodoModel.Filter[key]
@@ -24,11 +24,14 @@ export namespace App {
 export const App = ({ history, location }: App.Props) => {
   const dispatch = useDispatch();
   const todoActions = useTodoActions(dispatch);
-  const { todos, filter } = useSelector((state: RootState) => {
+  const muActions = useMUActions(dispatch);
+  const { todos, filter, mu } = useSelector((state: RootState) => {
     const hash = location?.hash?.replace('#', '');
+    console.log('hash mu=>', state.mu)
     return {
       todos: state.todos,
-      filter: FILTER_VALUES.find((value) => value === hash) ?? TodoModel.Filter.SHOW_ALL
+      filter: FILTER_VALUES.find((value) => value === hash) ?? TodoModel.Filter.SHOW_ALL,
+      mu: state.mu
     };
   });
 
@@ -43,6 +46,8 @@ export const App = ({ history, location }: App.Props) => {
     [history]
   );
 
+  // const handleMUDeleted = React.useCallback()
+  // const activceMU = React.useMemo(() => mu, [mu]);
   const filteredTodos = React.useMemo(() => (filter ? todos.filter(FILTER_FUNCTIONS[filter]) : todos), [todos, filter]);
   const activeCount = React.useMemo(() => todos.filter((todo) => !todo.completed).length, [todos]);
   const completedCount = React.useMemo(() => todos.filter((todo) => todo.completed).length, [todos]);
@@ -102,6 +107,11 @@ export const App = ({ history, location }: App.Props) => {
 
       <div>------------------------ </div>
       <MUDataGrid columns= {muGridcolumns} rows= {muGridrows} />
+
+      <div>------------------------ </div>
+
+      <MUModelDataGrid columns= {muGridcolumns} rows= {mu} addItem= {muActions.addItem}/>
+
     </div>
   );
 };
