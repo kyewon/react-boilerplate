@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import style from './style.css';
 import { RouteComponentProps } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTodoActions, useMUActions } from 'app/actions';
 import { RootState } from 'app/reducers';
-import { TodoModel } from 'app/models';
-import { Header, TodoList, Footer, Temper, Board, MUTable, MUDataGrid, MUModelDataGrid } from 'app/components';
+import { TodoModel, MUModel } from 'app/models';
+import { Header, TodoList, Footer, Temper, Board, MUTable, MUDataGrid, MUModelDataGrid, ReducerSample } from 'app/components';
 
 const FILTER_VALUES = (Object.keys(TodoModel.Filter) as (keyof typeof TodoModel.Filter)[]).map(
   (key) => TodoModel.Filter[key]
@@ -86,6 +86,12 @@ export const App = ({ history, location }: App.Props) => {
     { field: 'age', headerName: 'Age', width: 200 }
   ]
 
+  const [count, setCount] = useState<number>(0);
+  const [mrows, setMrows] = useState<MUModel[]>(mu);
+  const onIncrease = () => setCount(count + 1);
+  const onDecrease = () => setCount(count - 1);
+  const changeRows = () => setMrows([...mrows, {id: mrows.length + 1, name: 'addTest', age: 66}])
+
   return (
     <div className={style.normal}>
       <Header addTodo={todoActions.addTodo} />
@@ -110,8 +116,22 @@ export const App = ({ history, location }: App.Props) => {
 
       <div>------------------------ </div>
 
-      <MUModelDataGrid columns= {muGridcolumns} rows= {mu} addItem= {muActions.addItem}/>
+      <MUModelDataGrid columns= {muGridcolumns} rows= {mrows} addItem= {muActions.addItem}/>
 
+      <div>------------------------ </div>
+
+      <h1>{count}</h1>
+      <h2>{JSON.stringify(mrows)}</h2>
+      <div>
+        <button onClick={onIncrease}>+1</button>
+        <button onClick={onDecrease}>-1</button>
+
+        <button onClick={changeRows}>changeRows</button>
+      </div>
+
+      <div>------------------------ </div>
+      <br></br>
+      <ReducerSample/>
     </div>
   );
 };

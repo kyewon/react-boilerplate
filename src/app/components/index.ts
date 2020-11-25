@@ -8,3 +8,4 @@ export { Board } from './Board';
 export { MUTable } from './MaterialUI/MUTable';
 export { MUDataGrid } from './MaterialUI/MUDataGrid';
 export { MUModelDataGrid } from './MaterialUI/MUModelDataGrid';
+export { ReducerSample } from './ReducerSample';
