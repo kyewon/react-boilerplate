@@ -4,9 +4,18 @@ export namespace Code {
 
   export enum ActionType {
     SET_COUNT = 'SET_COUNT',
+    ADD_COUNT = 'ADD_COUNT',
+    MINUS_COUNT = 'MINUS_COUNT',
     SET_TEXT = 'SET_TEXT',
     SET_COLOR = 'SET_COLOR',
     TOGGLE_GOOD = 'TOGGLE_GOOD',
+  }
+
+  export const Type = {
+    SET_COUNT: 'SET_COUNT',
+    SET_TEXT: 'SET_TEXT',
+    SET_COLOR: 'SET_COLOR',
+    TOGGLE_GOOD: 'TOGGLE_GOOD',
   }
 
   export type State = {
