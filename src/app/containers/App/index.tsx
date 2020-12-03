@@ -6,6 +6,7 @@ import { useTodoActions, useMUActions } from 'app/actions';
 import { RootState } from 'app/reducers';
 import { TodoModel, MUModel } from 'app/models';
 import { Header, TodoList, Footer, Temper, Board, MUTable, MUDataGrid, MUModelDataGrid, ReducerSample } from 'app/components';
+// import useEmployee from '../../sagas/api/hooks/useEmployee'
 
 const FILTER_VALUES = (Object.keys(TodoModel.Filter) as (keyof typeof TodoModel.Filter)[]).map(
   (key) => TodoModel.Filter[key]
@@ -27,13 +28,14 @@ export const App = ({ history, location }: App.Props) => {
   const muActions = useMUActions(dispatch);
   const { todos, filter, mu } = useSelector((state: RootState) => {
     const hash = location?.hash?.replace('#', '');
-    console.log('hash mu=>', state.mu)
+    console.log('hash mu=>', mu)
     return {
       todos: state.todos,
       filter: FILTER_VALUES.find((value) => value === hash) ?? TodoModel.Filter.SHOW_ALL,
       mu: state.mu
     };
   });
+  // const { employeeState, fetchEmployees } = useEmployee()
 
   const handleClearCompleted = React.useCallback((): void => {
     todoActions.clearCompleted();
